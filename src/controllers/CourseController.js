@@ -20,6 +20,24 @@ class CourseController {
             return res.status(500).json({ message: 'Error creating course' });
         } 
     }
+
+    async index(req, res) {
+        try {
+            const courses = await Course.findAll();
+
+            if (courses?.length === 0) {
+                return res.status(404).json({ message: 'No courses found' });
+            }
+            
+            return res.status(200).json({
+                error: false,
+                courses
+            });
+        } catch (err) {
+            console.error('Error listing courses', err);
+            return res.status(500).json({ message: 'Error listing courses' });
+        }
+    }
 }
 
 module.exports = new CourseController;
