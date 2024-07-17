@@ -53,6 +53,33 @@ class CourseController {
             return res.status(500).json({ message: 'Error listing courses' });
         }
     }
+
+    async update(req, res) {
+        try {
+            const { id } = req.params;
+            const data = req.body;
+
+            if (!data.name && !data.duration) {
+                return res.status(400).json({ error: 'Missing required data' });
+            }
+
+            const course = await Course.findByPk(id);
+
+            if (!course) {
+                return res.status(404).json({ message: 'Course not found' });
+            }
+
+            await course.update(data);
+
+            return res.status(200).json({
+                error: false,
+                course
+            });
+        } catch (err) {
+            console.error('Error updating course', err);
+            return res.status(500).json({ message: 'Error updating course' });
+        }
+    }
 }
 
 module.exports = new CourseController;
