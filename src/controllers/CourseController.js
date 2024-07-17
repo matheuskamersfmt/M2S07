@@ -5,9 +5,11 @@ class CourseController {
     async create(req, res) {
         try {
             const data = req.body;
-            console.log(data);
             if (!data.name || !data.duration) {
-                return res.status(400).json({ error: 'Missing required data' });
+                return res.status(400).json({ 
+                    error: true, 
+                    message: 'Missing required data' 
+                });
             }
 
             const course = await Course.create(data); 
@@ -18,7 +20,10 @@ class CourseController {
             });
         } catch (err) {
             console.error('Error creating course', err);
-            return res.status(500).json({ message: 'Error creating course' });
+            return res.status(500).json({ 
+                error: true, 
+                message: 'Error creating course' 
+            });
         } 
     }
 
@@ -41,7 +46,9 @@ class CourseController {
             const courses = await Course.findAll({ where: query });
 
             if (courses?.length === 0) {
-                return res.status(404).json({ message: 'No courses found' });
+                return res.status(404).json({ 
+                    error: true, 
+                    message: 'No courses found' });
             }
 
             return res.status(200).json({
@@ -50,7 +57,9 @@ class CourseController {
             });
         } catch (err) {
             console.error('Error listing courses', err);
-            return res.status(500).json({ message: 'Error listing courses' });
+            return res.status(500).json({ 
+                error: true, 
+                message: 'Error listing courses' });
         }
     }
 
@@ -60,13 +69,17 @@ class CourseController {
             const data = req.body;
 
             if (!data.name && !data.duration) {
-                return res.status(400).json({ error: 'Missing required data' });
+                return res.status(400).json({ 
+                    error: true, 
+                    message: 'Missing required data' });
             }
 
             const course = await Course.findByPk(id);
 
             if (!course) {
-                return res.status(404).json({ message: 'Course not found' });
+                return res.status(404).json({ 
+                    error: true, 
+                    message: 'Course not found' });
             }
 
             await course.update(data);
@@ -77,7 +90,10 @@ class CourseController {
             });
         } catch (err) {
             console.error('Error updating course', err);
-            return res.status(500).json({ message: 'Error updating course' });
+            return res.status(500).json({ 
+                error: true, 
+                message: 'Error updating course' 
+            });
         }
     }
 
@@ -88,7 +104,10 @@ class CourseController {
             const course = await Course.findByPk(id);
 
             if (!course) {
-                return res.status(404).json({ message: 'Course not found' });
+                return res.status(404).json({ 
+                    error: true, 
+                    message: 'Course not found' 
+                });
             }
 
             await course.destroy();
@@ -96,7 +115,10 @@ class CourseController {
             return res.status(204).json();
         } catch (err) {
             console.error('Error deleting course', err);
-            return res.status(500).json({ message: 'Error deleting course' });
+            return res.status(500).json({ 
+                error: true, 
+                message: 'Error deleting course' 
+            });
         }
     }
 }
