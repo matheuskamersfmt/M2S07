@@ -80,6 +80,25 @@ class CourseController {
             return res.status(500).json({ message: 'Error updating course' });
         }
     }
+
+    async delete(req, res) {
+        try {
+            const { id } = req.params;
+
+            const course = await Course.findByPk(id);
+
+            if (!course) {
+                return res.status(404).json({ message: 'Course not found' });
+            }
+
+            await course.destroy();
+
+            return res.status(204).json();
+        } catch (err) {
+            console.error('Error deleting course', err);
+            return res.status(500).json({ message: 'Error deleting course' });
+        }
+    }
 }
 
 module.exports = new CourseController;
