@@ -1,4 +1,5 @@
 const Course = require('../models/Course');
+const { Op } = require('sequelize');
 
 class CourseController {
     async create(req, res) {
@@ -23,12 +24,26 @@ class CourseController {
 
     async index(req, res) {
         try {
-            const courses = await Course.findAll();
+
+            const { name, duration } = req.query;
+            let query = {};
+
+            if (name) {
+                query.name = {
+                    [Op.iLike]: `%${name}%`
+                };
+            }
+
+            if (duration) {
+                query.duration = duration;
+            }   
+
+            const courses = await Course.findAll({ where: query });
 
             if (courses?.length === 0) {
                 return res.status(404).json({ message: 'No courses found' });
             }
-            
+
             return res.status(200).json({
                 error: false,
                 courses
