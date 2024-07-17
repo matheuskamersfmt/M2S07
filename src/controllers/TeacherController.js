@@ -91,7 +91,7 @@ class TeacherController {
             });
 
         } catch (err) {
-            console.log(err);
+            console.log('Error listing teachers', err);
             return res.status(500).json({
                 error: true,
                 message: 'Teachers not found!'
@@ -117,7 +117,7 @@ class TeacherController {
             });
 
         } catch (err) {
-            console.log('Error  ',err);
+            console.log('Error listing teacher', err);
             return res.status(500).json({
                 error: true,
                 message: 'Error: Teacher not found!'
