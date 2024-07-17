@@ -1,11 +1,9 @@
-import express from "express";
-import cors from "cors";
-import connection from "./database/connection.js";
-import routes from "./routes/routes.js";
-import dotenv from "dotenv";
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
+const connection = require("./database/connection");
+const routes = require("./routes/routes");
 
-export default class Server {
+class Server {
   constructor(server = express()) {
     this.middlewares(server);
     this.database();
@@ -34,3 +32,5 @@ export default class Server {
     });
   }
 }
+
+module.exports = { Server };

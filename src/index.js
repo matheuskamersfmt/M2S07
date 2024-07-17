@@ -1,3 +1,3 @@
-import Server from "./server.js";
+const { Server } = require('./server');
 
 new Server();

@@ -20,6 +20,7 @@ Opção nº 2: npx sequelize db:migrate
 ##  Reverter a última migration:
 Opção nº 1: sequelize-cli db:migrate:undo
 Opção nº 2: npx sequelize-cli db:migrate:undo
+
 ##  Reverter todas as migrations:
 Opção nº 1: sequelize-cli db:migrate:undo:all
 Opção nº 2: npx sequelize-cli db:migrate:undo:all
